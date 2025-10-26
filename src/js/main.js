@@ -22,7 +22,7 @@ let timeError = false;    // Shifts entire savedata array to the right by 1 and 
 let sortedIndexList = [];
 let recordDataList  = [];
 let parentIndexList = [];
-let tiedDataList    = [];
+// let tiedDataList    = [];
 
 let leftIndex       = 0;
 let leftInnerIndex  = 0;
@@ -36,7 +36,7 @@ let pointer         = 0;
 let sortedIndexListPrev = [];
 let recordDataListPrev  = [];
 let parentIndexListPrev = [];
-let tiedDataListPrev    = [];
+// let tiedDataListPrev    = [];
 
 let leftIndexPrev       = 0;
 let leftInnerIndexPrev  = 0;
@@ -63,7 +63,7 @@ function init() {
   document.querySelector('.left.sort.image').addEventListener('click', () => pick('left'));
   document.querySelector('.right.sort.image').addEventListener('click', () => pick('right'));
   
-  document.querySelector('.sorting.tie.button').addEventListener('click', () => pick('tie'));
+  // document.querySelector('.sorting.tie.button').addEventListener('click', () => pick('tie'));
   document.querySelector('.sorting.undo.button').addEventListener('click', undo);
   document.querySelector('.sorting.save.button').addEventListener('click', () => saveProgress('Progress'));
   
@@ -81,7 +81,7 @@ function init() {
         case 's': case '3':                   saveProgress('Progress'); break;
         case 'h': case 'ArrowLeft':           pick('left'); break;
         case 'l': case 'ArrowRight':          pick('right'); break;
-        case 'k': case '1': case 'ArrowUp':   pick('tie'); break;
+        // case 'k': case '1': case 'ArrowUp':   pick('tie'); break;
         case 'j': case '2': case 'ArrowDown': undo(); break;
         default: break;
       }
@@ -215,7 +215,7 @@ function start() {
    */
 
   recordDataList  = characterDataToSort.map(() => 0);
-  tiedDataList    = characterDataToSort.map(() => -1);
+  // tiedDataList    = characterDataToSort.map(() => -1);
 
   /** 
    * Put a list of indexes that we'll be sorting into sortedIndexList. These will refer back
@@ -302,7 +302,7 @@ function display() {
     switch (Number(choices[battleNo - 1])) {
       case 0: pick('left'); break;
       case 1: pick('right'); break;
-      case 2: pick('tie'); break;
+      // case 2: pick('tie'); break;
       default: break;
     }
   } else { saveProgress('Autosave'); }
@@ -320,7 +320,7 @@ function pick(sortType) {
   sortedIndexListPrev = sortedIndexList.slice(0);
   recordDataListPrev  = recordDataList.slice(0);
   parentIndexListPrev = parentIndexList.slice(0);
-  tiedDataListPrev    = tiedDataList.slice(0);
+  // tiedDataListPrev    = tiedDataList.slice(0);
 
   leftIndexPrev       = leftIndex;
   leftInnerIndexPrev  = leftInnerIndex;
@@ -341,17 +341,17 @@ function pick(sortType) {
     case 'left': {
       if (choices.length === battleNo - 1) { choices += '0'; }
       recordData('left');
-      while (tiedDataList[recordDataList[pointer - 1]] != -1) {
-        recordData('left');
-      }
+      // while (tiedDataList[recordDataList[pointer - 1]] != -1) {
+      //   recordData('left');
+      // }
       break;
     }
     case 'right': {
       if (choices.length === battleNo - 1) { choices += '1'; }
       recordData('right');
-      while (tiedDataList[recordDataList [pointer - 1]] != -1) {
-        recordData('right');
-      }
+      // while (tiedDataList[recordDataList [pointer - 1]] != -1) {
+      //   recordData('right');
+      // }
       break;
     }
 
@@ -362,19 +362,19 @@ function pick(sortType) {
    * index value into the list of ties (at the left character's index) and then proceed
    * as if we picked the 'right' character.
    */
-    case 'tie': {
-      if (choices.length === battleNo - 1) { choices += '2'; }
-      recordData('left');
-      while (tiedDataList[recordDataList[pointer - 1]] != -1) {
-        recordData('left');
-      }
-      tiedDataList[recordDataList[pointer - 1]] = sortedIndexList[rightIndex][rightInnerIndex];
-      recordData('right');
-      while (tiedDataList[recordDataList [pointer - 1]] != -1) {
-        recordData('right');
-      }
-      break;
-    }
+    // case 'tie': {
+    //   if (choices.length === battleNo - 1) { choices += '2'; }
+    //   recordData('left');
+    //   while (tiedDataList[recordDataList[pointer - 1]] != -1) {
+    //     recordData('left');
+    //   }
+    //   tiedDataList[recordDataList[pointer - 1]] = sortedIndexList[rightIndex][rightInnerIndex];
+    //   recordData('right');
+    //   while (tiedDataList[recordDataList [pointer - 1]] != -1) {
+    //     recordData('right');
+    //   }
+    //   break;
+    // }
     default: return;
   }
 
@@ -492,7 +492,7 @@ function result(imageNum = 3) {
   }
 
   let rankNum       = 1;
-  let tiedRankNum   = 1;
+  // let tiedRankNum   = 1;
   let imageDisplay  = imageNum;
 
   const finalSortedIndexes = sortedIndexList[0].slice(0);
@@ -512,14 +512,14 @@ function result(imageNum = 3) {
     }
     finalCharacters.push({ rank: rankNum, name: character.name });
 
-    if (idx < characterDataToSort.length - 1) {
-      if (tiedDataList[characterIndex] === finalSortedIndexes[idx + 1]) {
-        tiedRankNum++;            // Indicates how many people are tied at the same rank.
-      } else {
-        rankNum += tiedRankNum;   // Add it to the actual ranking, then reset it.
-        tiedRankNum = 1;          // The default value is 1, so it increments as normal if no ties.
-      }
-    }
+    // if (idx < characterDataToSort.length - 1) {
+    //   if (tiedDataList[characterIndex] === finalSortedIndexes[idx + 1]) {
+    //     tiedRankNum++;            // Indicates how many people are tied at the same rank.
+    //   } else {
+    //     rankNum += tiedRankNum;   // Add it to the actual ranking, then reset it.
+    //     tiedRankNum = 1;          // The default value is 1, so it increments as normal if no ties.
+    //   }
+    // }
   });
 }
 
@@ -532,7 +532,7 @@ function undo() {
   sortedIndexList = sortedIndexListPrev.slice(0);
   recordDataList  = recordDataListPrev.slice(0);
   parentIndexList = parentIndexListPrev.slice(0);
-  tiedDataList    = tiedDataListPrev.slice(0);
+  // tiedDataList    = tiedDataListPrev.slice(0);
 
   leftIndex       = leftIndexPrev;
   leftInnerIndex  = leftInnerIndexPrev;
