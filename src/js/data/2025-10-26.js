@@ -7,14 +7,14 @@ dataSet[dataSetVersion].options = [
 dataSet[dataSetVersion].characterData = [
   {
     name: "Mandragora",
-    img: "jjpp5Vf.png",
+    img: "L9pLfeul.png",
     opts: {
       mandragora: true,
     }
   },
   {
     name: "Mandragora",
-    img: "jjpp5Vf.png",
+    img: "L9pLfeul.png",
     opts: {
       mandragora: true,
     }
