@@ -766,21 +766,20 @@ function preloadImages() {
   const totalLength = characterDataToSort.length;
   let imagesLoaded = 0;
 
-  const loadImage = async (src) => {
-    const blob = await fetch(src).then(res => res.blob());
-    return new Promise((res, rej) => {
-      const reader = new FileReader();
-      reader.onload = ev => {
+ return Promise.all(characterDataToSort.map((char, idx) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
         progressBar(`Loading Image ${++imagesLoaded}`, Math.floor(imagesLoaded * 100 / totalLength));
-        res(ev.target.result);
+        characterDataToSort[idx].img = img.src;
+        resolve();
       };
-      reader.onerror = rej;
-      reader.readAsDataURL(blob);
+      img.onerror = () => {
+        console.error(`Failed to load image: src/assets/${char.img}`);
+        reject();
+      };
+      img.src = `src/assets/${char.img}`;
     });
-  };
-
-  return Promise.all(characterDataToSort.map(async (char, idx) => {
-    characterDataToSort[idx].img = await loadImage(imageRoot + char.img);
   }));
 }
 
